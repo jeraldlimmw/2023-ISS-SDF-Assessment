@@ -30,17 +30,8 @@ public class App {
             }
         }
         for(String k : nextWordCount.keySet()) {
-            String firstWord = k;
-            // if (k.contains("_")) {
-            //     firstWord = firstWord.replace('_', '\'');
-            // }
             System.out.println(k);
-            String nextWord;
             for (NextWord nw : nextWordCount.get(k)){
-                nextWord = nw.getWord();
-                // if (nextWord.contains("_")) {
-                //     nextWord = nextWord.replace('_', '\'');
-                // }
                 System.out.printf("    %s %.2f\n", nw.getWord(), wordProbability(nw, nextWordCount.get(k)));
             }
         }
@@ -58,11 +49,12 @@ public class App {
             fullText += (line.toLowerCase() + " ");
         }
 
-        fullText = fullText.replaceAll("(' )", " ");
-        fullText = fullText.replaceAll("( ')", "_");
-
+        // get rid of quote marks to keep contractions
+        fullText = fullText.replaceAll("\s\'", " ");
+        fullText = fullText.replaceAll("\'\s", " ");
+        
         // split fullText into an array of individual words
-        String[] words = fullText.split("[\\W]+");
+        String[] words = fullText.split("[:\" .,!?(){}-]+");
 
         NextWord next;
         List<NextWord> nextWordList;
@@ -102,7 +94,6 @@ public class App {
                 nextWordCount.replace(words[i], nextWordCount.get(words[i]), temp);
             }
         }
-
         br.close();
         isr.close();
         is.close();

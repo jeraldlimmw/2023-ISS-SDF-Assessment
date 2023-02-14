@@ -52,7 +52,7 @@ public class App {
         // get rid of quote marks to keep contractions
         fullText = fullText.replaceAll("\s\'", " ");
         fullText = fullText.replaceAll("\'\s", " ");
-        
+
         // split fullText into an array of individual words
         String[] words = fullText.split("[:\" .,!?(){}-]+");
 
